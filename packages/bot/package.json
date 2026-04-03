@@ -1,0 +1,14 @@
+{
+  "name": "@tally/bot",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "node --loader ./load.mjs --env-file=.env ./dist/index.js",
+    "watch": "tsc --watch --project tsconfig.json",
+    "serve": "nodemon --loader ./load.mjs --env-file=.env ./dist/index.js"
+  },
+  "dependencies": {
+    "@tally/core": "workspace:*"
+  }
+}
