@@ -1,0 +1,22 @@
+{
+  "name": "@tally/stride",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  },
+  "type": "module",
+  "dependencies": {
+    "discord-api-types": "^0.38.44",
+    "discord.js": "^14.25.1",
+    "serialize-error": "^13.0.1"
+  }
+}

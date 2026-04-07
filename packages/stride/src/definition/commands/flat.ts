@@ -1,0 +1,85 @@
+import type { Awaitable, ChatInputCommandInteraction } from "discord.js";
+import type { GuildCacheReducer } from "../../util.js";
+import type { BaseChatCommandData } from "../commands.js";
+import type { CommandOption, OptionsToType } from "./options.js";
+
+import { ApplicationCommandType, PermissionsBitField } from "discord.js";
+
+import { commands } from "../commands.js";
+import { loginActive } from "../../client.js";
+
+/**
+ * Define a basic, flat chat command.
+ *
+ * @param data Chat command configuration data.
+ * @param handler The command handler.
+ */
+export function defineChatCommand<
+	InGuild extends true,
+	Options extends FlatCommandOptions<InGuild>,
+>(data: FlatCommandData<InGuild, Options>, handler: FlatCommandHandler<InGuild, Options>): void;
+export function defineChatCommand<
+	InGuild extends false,
+	Options extends FlatCommandOptions<InGuild>,
+>(data: FlatCommandData<InGuild, Options>, handler: FlatCommandHandler<InGuild, Options>): void;
+export function defineChatCommand(
+	data: FlatCommandData<boolean, FlatCommandOptions<boolean>>,
+	handler: FlatCommandHandler,
+): void {
+	if (!loginActive)
+		throw new ReferenceError("Commands cannot be defined after login");
+
+	const oldCommand = commands[data.name]?.[0];
+	if (oldCommand && (oldCommand.command as FlatCommandHandler) !== handler)
+		throw new ReferenceError(`Command ${data.name} has already been defined`);
+
+	if (data.global && data.allowGuild !== undefined)
+		throw new TypeError("Commands cannot define both `allowGuild` and `global`");
+
+	commands[data.name] ??= [];
+	commands[data.name]?.push({
+		name: data.name,
+		description: data.description,
+		options: data.options,
+		global: data.global ?? false,
+		allowGuild: data.allowGuild,
+		command: handler,
+		type: ApplicationCommandType.ChatInput,
+		defaultMemberPermissions: data.restricted ? new PermissionsBitField() : null,
+	});
+}
+
+/** Single-level chat command configuration data. */
+export type FlatCommandData<
+	InGuild extends boolean,
+	Options extends FlatCommandOptions<InGuild>,
+> = {
+	subcommands?: never;
+	/** Key-value pair where the keys are option names and the values are option details. */
+	options?: Options;
+} & BaseChatCommandData<InGuild>
+	& AugmentedFlatCommandData<InGuild, Options>;
+/** Options for a single-level chat command. */
+export type FlatCommandOptions<InGuild extends boolean> = Record<string, CommandOption<InGuild>>;
+
+/** A single-level chat command handler. */
+export type FlatCommandHandler<
+	InGuild extends boolean = boolean,
+	Options extends FlatCommandOptions<InGuild> = FlatCommandOptions<InGuild>,
+> = (
+	interaction: ChatInputCommandInteraction<GuildCacheReducer<InGuild>>,
+	/**
+	 * Utilize to retrieve option values at runtime. You can always use {@link interaction.options},
+	 * however, this is a key-value object of options. That is often simpler to use and has better
+	 * types when using TypeScript.
+	 */
+	options: OptionsToType<InGuild, Options>,
+) => Awaitable<unknown>;
+
+/** Can be augmented to add custom single-level chat command properties (advanced usage) */
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface AugmentedFlatCommandData<
+	InGuild extends boolean,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	_Options extends FlatCommandOptions<InGuild>,
+> {}

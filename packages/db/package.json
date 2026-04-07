@@ -1,0 +1,26 @@
+{
+  "name": "@tally/db",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.9.3"
+  },
+  "type": "module",
+  "dependencies": {
+    "@surrealdb/node": "^3.0.3",
+    "@thetally/toolbox": "^1.1.1",
+    "redis": "^5.11.0",
+    "surrealdb": "^2.0.3",
+    "ws": "^8.20.0",
+    "zod": "^4.3.6"
+  }
+}

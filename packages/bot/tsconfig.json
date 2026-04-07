@@ -4,6 +4,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "common/*": ["./common/*"]
+    }
   }
 }

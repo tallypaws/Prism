@@ -4,11 +4,21 @@
   "type": "module",
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "start": "node --loader ./load.mjs --env-file=.env ./dist/index.js",
+    "start": "node --loader ./load.mjs ./dist/sharding.js",
     "watch": "tsc --watch --project tsconfig.json",
-    "serve": "nodemon --loader ./load.mjs --env-file=.env ./dist/index.js"
+    "serve": "nodemon --loader ./load.mjs ./dist/sharding.js",
+    "preinstall": "node ../../scripts/no-npm.js"
   },
   "dependencies": {
-    "@tally/core": "workspace:*"
+    "@octokit/rest": "^22.0.1",
+    "@tally/core": "workspace:*",
+    "@tally/db": "workspace:*",
+    "@tally/stride": "workspace:*",
+    "discord.js": "^14.25.1",
+    "handlebars": "^4.7.9",
+    "json5": "^2.2.3",
+    "serialize-error": "^13.0.1",
+    "surrealdb": "^2.0.3",
+    "zod": "^4.3.6"
   }
 }

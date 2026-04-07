@@ -2,3 +2,7 @@
 */*/node_modules
 */*/dist
 /packages/bot/.prismbackup
+
+**/**/.env
+.old.ts
+/redis

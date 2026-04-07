@@ -4,6 +4,11 @@
   "version": "0.0.0",
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm -r --parallel dev"
+    "dev": "pnpm -r --parallel dev",
+    "preinstall": "node ./scripts/no-npm.js"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "dependencies": {
+    "@thetally/toolbox": "^1.1.1"
   }
 }
