@@ -39,14 +39,14 @@ async function connectSurrealDB({
 
 type ConnectDBSOptions = {
   surreal: Parameters<typeof connectSurrealDB>[0];
-  // redis: Parameters<typeof connectRedis>[0];
+  redis: Parameters<typeof connectRedis>[0];
 
   // FUCK YOUUUUU
-  redis?: {
-    url?: string | undefined;
-    username?: string | undefined;
-    password?: string | undefined;
-  };
+  // redis?: {
+  //   url?: string | undefined;
+  //   username?: string | undefined;
+  //   password?: string | undefined;
+  // };
 };
 
 export async function connectDBS(options: ConnectDBSOptions) {
@@ -85,7 +85,7 @@ export async function transaction(): Promise<TallyTransaction> {
     await Promise.all(callbacks.map((c) => c()));
   };
 
-  return dbTransaction;
+  return dbTransaction; 
 }
 
 export * from "./singleton.js";
