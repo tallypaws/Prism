@@ -10,5 +10,10 @@
   "packageManager": "pnpm@9.0.0",
   "dependencies": {
     "@thetally/toolbox": "^1.1.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

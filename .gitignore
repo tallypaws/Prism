@@ -1,8 +1,8 @@
-/node_modules
+node_modules
 */*/node_modules
 */*/dist
-/packages/bot/.prismbackup
+packages/bot/.prismbackup
 
 **/**/.env
 .old.ts
-/redis
+redis
